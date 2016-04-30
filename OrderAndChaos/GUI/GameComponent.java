@@ -184,20 +184,14 @@ public class GameComponent extends JComponent implements GameListener, MouseList
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if (!game.getPointsGiven()) {
+        Player currentPlayer = game.getCurrentPlayer();
+        if (!game.getPointsGiven() && !(currentPlayer instanceof IAI)) {
             if (!SwingUtilities.isRightMouseButton(e)) {
-                //game.setTile(e.getX() / Constants.SQUARE_SIZE, e.getY() / Constants.SQUARE_SIZE, 1);
-                Player currentPlayer = game.getCurrentPlayer();
-                if (!(currentPlayer instanceof IAI)) {
-                    currentPlayer.setCurrentChoice(e.getX() / Constants.SQUARE_SIZE, (e.getY() - Constants.PADDING_TOP) / Constants.SQUARE_SIZE);
-                    //System.out.println("XX: " + e.getX() / Constants.SQUARE_SIZE + " YY: " + (e.getY() - Constants.PADDING_TOP) / Constants.SQUARE_SIZE);
-                    currentPlayer.playRound();
-                }
+                currentPlayer.setCurrentChoice(e.getX() / Constants.SQUARE_SIZE, (e.getY() - Constants.PADDING_TOP) / Constants.SQUARE_SIZE, true); // X
             } else {
-                if (game.DEBUG_LEVEL >= 1) {
-                    game.setTile(e.getX() / Constants.SQUARE_SIZE, (e.getY() - Constants.PADDING_TOP) / Constants.SQUARE_SIZE, 0);
-                }
+                currentPlayer.setCurrentChoice(e.getX() / Constants.SQUARE_SIZE, (e.getY() - Constants.PADDING_TOP) / Constants.SQUARE_SIZE, false); // O
             }
+            currentPlayer.playRound();
         } else {
             game.resetGame();
         }

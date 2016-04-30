@@ -10,5 +10,5 @@ public interface IPlayer {
     void givePoint();
     void playRound();
     void resetScore();
-    void setCurrentChoice(int x, int y);
+    void setCurrentChoice(int x, int y, boolean cross);
 }

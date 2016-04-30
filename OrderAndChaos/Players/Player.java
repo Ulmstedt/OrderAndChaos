@@ -9,6 +9,7 @@ import OrderAndChaos.Game.Game;
 public class Player implements IPlayer{
 
     protected int ID, score, currX, currY;
+    protected boolean cross;
     protected Game game;
     protected int[][] pointGrid; // Higher score => better move (used for AI)
 
@@ -19,9 +20,10 @@ public class Player implements IPlayer{
         pointGrid = new int[game.getWidth()][game.getHeight()];
     }
 
-    public void setCurrentChoice(int x, int y) {
+    public void setCurrentChoice(int x, int y, boolean cross) {
         currX = x;
         currY = y;
+        this.cross = cross;
     }
 
     public int getID() {
@@ -60,7 +62,7 @@ public class Player implements IPlayer{
 
     public void playRound() {
         if (game.getTile(currX, currY) == 0) {
-            game.setTile(currX, currY, ID);
+            game.setTile(currX, currY, cross);
             game.incrementRoundCount();
             game.nextPlayer();
         }

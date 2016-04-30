@@ -143,7 +143,7 @@ public class AIJasmin extends Player implements IAI {
 
         System.out.print("AI played (" + p.x + ", " + p.y + "), taking ");
         if (game.getTile(p.x, p.y) == 0) {
-            game.setTile(p.x, p.y, ID);
+            //game.setTile(p.x, p.y, ID);
             game.incrementRoundCount();
             game.nextPlayer();
         }

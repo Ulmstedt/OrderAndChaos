@@ -287,8 +287,8 @@ public class Game {
     // ## Setters ##
     // #############
     //Should remake this system and make it safer
-    public void setTile(int x, int y, int value) {
-        board[x][y] = value;
+    public void setTile(int x, int y, boolean cross) {
+        board[x][y] = (cross ? 1 : 2);
         mostRecentMove = new Point(x, y);
         moveHistoryList.add((Point) mostRecentMove.clone());
         // Notify all players that a move has been made.
