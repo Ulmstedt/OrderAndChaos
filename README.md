@@ -1,4 +1,5 @@
-# OrderAndChaos
+# Order and Chaos
+### By Mattias Ulmstedt
 
 ## What's up?
 This repo contains a simple Order and Chaos game in Java
