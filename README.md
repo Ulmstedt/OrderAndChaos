@@ -1,7 +1,7 @@
 # Order and Chaos
 
 ## What's up?
-This repo contains a simple Order and Chaos game in Java by Mattias Ulmstedt.
+This repo contains a simple Order and Chaos game in Java by Mattias Ulmstedt (currently under development).
 
 ## What in the world is order and chaos?
 
