@@ -1,5 +1,6 @@
 package OrderAndChaos.Game;
 
+import OrderAndChaos.Game.Constants.ColorList;
 import OrderAndChaos.Players.IAI;
 import OrderAndChaos.Players.IObserver;
 import OrderAndChaos.Players.Jasmin.AIJasmin;
@@ -31,6 +32,7 @@ public class Game {
     private int[][] board;
     private ArrayList<Point> moveHistoryList;
     private Point mostRecentMove;
+    private int chaosPlayerId; //ID of player playing as Chaos
 
     public final int DEBUG_LEVEL = 0; // 0 = off, 1 = show heatmap, 2 = show heatmap + scores
     public final int HEATMAP_PID = 2; // Player ID to show heatmap for
@@ -74,8 +76,9 @@ public class Game {
                 for (IObserver o : observerList) {
                     o.roundEnded(winner);
                 }
-                if(winner == 1 || winner == 2)
-                    resetGame(); //automatically start new game after someone wins (for fast ai vs ai games)
+                if(winner == 1 || winner == 2){
+                    //resetGame(); //automatically start new game after someone wins (for fast ai vs ai games)
+                }
             }
             winner = 0;
 
@@ -99,6 +102,7 @@ public class Game {
         //playerList.add(new AIPlayer(3, this));
         //playerList.add(new AIJimmyOld(2, this));
 
+        this.chaosPlayerId = (int) Math.round(Math.random())+1; //Randomly decide who starts as Chaos
         this.playerStarted = 0;
         this.currentPlayer = playerList.get(playerStarted);
         //currentPlayer = playerList.get(1); //Player 2 always starts (can anyone beat AIPlayer when he starts?)
@@ -126,8 +130,10 @@ public class Game {
 
         // Switch players.
         playerStarted++;
+        chaosPlayerId++;
         if (playerStarted == playerList.size()) {
             playerStarted = 0;
+            chaosPlayerId = 1;
         }
         currentPlayer = playerList.get(playerStarted);
         //currentPlayer = playerList.get(1); //Player 2 always starts (can anyone beat AIPlayer when he starts?)
@@ -138,7 +144,7 @@ public class Game {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 if (USE_RANDOM_COLORS == 1) {
-                    //color[i][j] = (Math.random() >= 0.5 ? ColorList.colors.get(0) : ColorList.colors.get(1)); //Random with just the standard colors
+                    color[i][j] = (Math.random() >= 0.5 ? ColorList.colors.get(0) : ColorList.colors.get(1)); //Random with just the standard colors
 
                 } else {
                     color[i][j] = new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255)); //Random colors
@@ -182,17 +188,20 @@ public class Game {
                 for (int y = 0; y < height; y++) {
                     //Check rows
                     if (x <= width - 5 && (tiles[x][y] == p && tiles[x + 1][y] == p && tiles[x + 2][y] == p && tiles[x + 3][y] == p && tiles[x + 4][y] == p)) {
-                        return p;
+                        System.out.println(chaosPlayerId);
+                        return this.chaosPlayerId;
                     }
                     //Check columns
                     if (y <= height - 5 && (tiles[x][y] == p && tiles[x][y + 1] == p && tiles[x][y + 2] == p && tiles[x][y + 3] == p && tiles[x][y + 4] == p)) {
-                        return p;
+                        System.out.println(chaosPlayerId);
+                        return this.chaosPlayerId;
                     }
                     //Check diagonals
                     if (x >= 2 && x <= width - 3 && y >= 2 && y <= height - 3
                             && ((tiles[x - 2][y - 2] == p && tiles[x - 1][y - 1] == p && tiles[x][y] == p && tiles[x + 1][y + 1] == p && tiles[x + 2][y + 2] == p)
                             || (tiles[x + 2][y - 2] == p && tiles[x + 1][y - 1] == p && tiles[x][y] == p && tiles[x - 1][y + 1] == p && tiles[x - 2][y + 2] == p))) {
-                        return p;
+                        System.out.println(chaosPlayerId);
+                        return this.chaosPlayerId;
                     }
                 }
             }
@@ -264,6 +273,10 @@ public class Game {
 
     public ArrayList<Point> getMoveHistory() {
         return moveHistoryList;
+    }
+    
+    public int getChaosPlayerId(){
+        return chaosPlayerId;
     }
 
     // #############
