@@ -54,6 +54,9 @@ public class Game {
     public void tick() {
         if (winner == 0) {
             if (isBoardFull()) {
+                //Chaos player won
+                winner = chaosPlayerId;
+                System.out.println("Chaos won");
                 // Notify all players that the round has ended before resetting the game.
                 for (IObserver o : observerList) {
                     o.roundEnded(winner);
@@ -164,8 +167,8 @@ public class Game {
     }
 
     public boolean isBoardFull() {
-        for (int i = 1; i < width - 1; i++) {
-            for (int j = 1; j < height - 1; j++) {
+        for (int i = 0; i < width ; i++) {
+            for (int j = 0; j < height ; j++) {
                 if (board[i][j] == 0) {
                     return false;
                 }
