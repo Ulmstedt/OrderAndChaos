@@ -53,17 +53,6 @@ public class Game {
     //Update game by 1 tick
     public void tick() {
         if (winner == 0) {
-            if (isBoardFull()) {
-                //Chaos player won
-                winner = chaosPlayerId;
-                System.out.println("Chaos won");
-                // Notify all players that the round has ended before resetting the game.
-                for (IObserver o : observerList) {
-                    o.roundEnded(winner);
-                }
-
-                resetGame();
-            }
             winner = checkForWinner(board);
             if (currentPlayer instanceof IAI && winner == 0) {
                 currentPlayer.playRound();
@@ -187,25 +176,26 @@ public class Game {
      Returns 0 if no winner, or the player ID if someone has won.
      */
     public int checkForWinner(int[][] tiles) {
+        //Check if chaos wins
+        if(isBoardFull()){
+            return chaosPlayerId;
+        }
         for (int p = 1; p <= getNumberOfPlayers(); p++) {
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
                     //Check rows
                     if (x <= width - 5 && (tiles[x][y] == p && tiles[x + 1][y] == p && tiles[x + 2][y] == p && tiles[x + 3][y] == p && tiles[x + 4][y] == p)) {
-                        System.out.println(chaosPlayerId);
-                        return this.chaosPlayerId;
+                        return (chaosPlayerId == 1 ? 2 : 1);
                     }
                     //Check columns
                     if (y <= height - 5 && (tiles[x][y] == p && tiles[x][y + 1] == p && tiles[x][y + 2] == p && tiles[x][y + 3] == p && tiles[x][y + 4] == p)) {
-                        System.out.println(chaosPlayerId);
-                        return this.chaosPlayerId;
+                        return (chaosPlayerId == 1 ? 2 : 1);
                     }
                     //Check diagonals
                     if (x >= 2 && x <= width - 3 && y >= 2 && y <= height - 3
                             && ((tiles[x - 2][y - 2] == p && tiles[x - 1][y - 1] == p && tiles[x][y] == p && tiles[x + 1][y + 1] == p && tiles[x + 2][y + 2] == p)
                             || (tiles[x + 2][y - 2] == p && tiles[x + 1][y - 1] == p && tiles[x][y] == p && tiles[x - 1][y + 1] == p && tiles[x - 2][y + 2] == p))) {
-                        System.out.println(chaosPlayerId);
-                        return this.chaosPlayerId;
+                        return (chaosPlayerId == 1 ? 2 : 1);
                     }
                 }
             }

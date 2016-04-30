@@ -54,16 +54,14 @@ public class GameComponent extends JComponent implements GameListener, MouseList
 
         int currentPlayer = game.getCurrentPlayer().getID();
 
+        g2d.setColor(Color.BLACK);
         //Draw whos turn it is
         g2d.setFont(new Font("Serif", Font.BOLD, 14));
-        g2d.setColor(ColorList.colors.get(currentPlayer - 1));
         g2d.drawString("Player " + currentPlayer + "'s turn", 3, 14);
         //Draw round number
-        g2d.setColor(Color.BLACK);
         g2d.drawString("Round: " + game.getRoundCount(), width / 2 - 30, 14);
         //Draw chaos player info
-        g2d.setColor(ColorList.colors.get(game.getChaosPlayerId()-1));
-        g2d.drawString("Player " + game.getChaosPlayerId() + " is playing as Order", 310, 14);
+        g2d.drawString("Player " + game.getChaosPlayerId() + " is playing as Chaos", 310, 14);
 
         //Draw scores and stats
         g2d.setColor(Color.BLACK);
@@ -166,7 +164,7 @@ public class GameComponent extends JComponent implements GameListener, MouseList
         if (winner != 0) {
             g2d.setColor(new Color(0f, 0f, 0f, 0.4f));
             g2d.fillRect(0, 0, width, height + Constants.PADDING_TOP + Constants.PADDING_BOTTOM);
-            g2d.setColor(ColorList.colors.get(winner - 1));
+            g2d.setColor(Color.WHITE);
             g2d.setFont(new Font("Serif", Font.BOLD, 50));
             g2d.drawString("Player " + winner + " wins!", width / 2 - 143, height / 2 - 10);
         }
