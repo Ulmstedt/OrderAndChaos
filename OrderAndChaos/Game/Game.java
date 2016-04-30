@@ -131,12 +131,13 @@ public class Game {
         moveHistoryList = new ArrayList<>();
         mostRecentMove = new Point(-1, -1);
 
+        //Switch who plays as Chaos
+        chaosPlayerId = (chaosPlayerId == 1 ? 2 : 1);
+        
         // Switch players.
         playerStarted++;
-        chaosPlayerId++;
         if (playerStarted == playerList.size()) {
             playerStarted = 0;
-            chaosPlayerId = 1;
         }
         currentPlayer = playerList.get(playerStarted);
         //currentPlayer = playerList.get(1); //Player 2 always starts (can anyone beat AIPlayer when he starts?)
